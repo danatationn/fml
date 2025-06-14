@@ -1,18 +1,8 @@
-Exactly what it says on the tin.
+# fml (fuck mouselook)
+this is a little add-on for gzdoom made for people that play with mouselook off
 
-To download the mod, click on Code and then Download ZIP. Maybe rename it to .pk3 while you're at it.
+this add-on solves the problem of you firing a cool weapon, and it launching your head backwards, not moving it back in the process
 
-The mod features 3 cvars:
-
-fml_enabled (true)
-
-fml_auto_disable (true)
-
-fml_reset_pitch (false)
-
-
-fml_enabled enables it
-
-fml_auto_disable automatically disables the mod when you turn on mouselook
-
-fml_reset_pitch resets your pitch to 0 rather then using your pitch before firing
+### cvars
+* `fml_enabled` default: true - enables the mod
+* `fml_during_shooting` default: false - it resets your pitch even when you're shooting/your gun isn't ready. this is more aggresive in terms of pitch correction

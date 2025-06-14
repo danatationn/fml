@@ -1,0 +1,11 @@
+AddOptionMenu "OptionsMenu"
+{
+	Option "Enable FML", "fml_enabled", "YesNo"
+	Option "Reset pitch while shooting", "fml_during_shooting", "YesNo"
+}
+
+AddOptionMenu "OptionsMenuSimple"
+{
+	Option "Enable FML", "fml_enabled", "YesNo"
+	Option "Reset pitch while shooting", "fml_during_shooting", "YesNo"
+}

@@ -1,4 +1,4 @@
-version "4.11"
+version "2.30"
 
 class FMLHandler : EventHandler {
 	override void PlayerSpawned(PlayerEvent e) {
@@ -10,15 +10,10 @@ class FMLHandler : EventHandler {
 
 class FMLInventory : Inventory {
 	float pitch;
-	bool isattacking;
-	int tics;
+	uint16 oldWeaponState;
 
 	Default {
 		+INVENTORY.AUTOACTIVATE;
-	}
-	
-	bool GetFreelook() {
-		return GetCVar("autoaim") < 35 && (GetCVar("m_pitch") > 0 && GetCVar("freelook"));
 	}
 	
 	override void Tick() {
@@ -26,24 +21,21 @@ class FMLInventory : Inventory {
 		let mo = player.mo;
 		
 		if (!mo.GetCVar("fml_enabled")) return;
-		if (mo.GetCVar("fml_auto_disable") && GetFreelook()) return;
+		// basically if the player has mouselook on, disable the mod
+		if (GetCVar("autoaim") < 35 && (GetCVar("m_pitch") > 0 && GetCVar("freelook"))) return;
 
-		if (player.WeaponState & WF_WEAPONREADY) {
-			if (isattacking) {
-				if (mo.GetCVar("fml_reset_pitch")) {
-					mo.pitch = 0;
-				} else {
-					mo.pitch = pitch;				
-				}
-				isattacking = false;
-			} else {
-				pitch = mo.pitch;
-			}
-		} else {
-			isattacking = true;
-		}
-	
-	
-	
+		// we want to reset the pitch ONLY after the player has finished shooting.
+		// for this we need to seek the last tic the player was shooting and the next tic where the player isn't
+		if (!(oldWeaponState & WF_WEAPONREADY) && player.weaponState & WF_WEAPONREADY)
+			mo.A_SetPitch(pitch, SPF_INTERPOLATE);
+
+		// or just always force it to be 0 i guess
+		if (!(player.weaponState & WF_WEAPONREADY) && mo.GetCVar("fml_during_shooting"))
+			mo.A_SetPitch(0, SPF_INTERPOLATE);
+		
+		if (player.weaponState & WF_WEAPONREADY)
+			pitch = mo.pitch;
+		
+		oldWeaponState = player.weaponState;
 	}
 }

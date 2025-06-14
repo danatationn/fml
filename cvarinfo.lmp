@@ -1,3 +1,2 @@
 user bool fml_enabled = true;
-user bool fml_auto_disable = true;
-user bool fml_reset_pitch = false;
+user bool fml_during_shooting = false;
