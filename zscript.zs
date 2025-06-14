@@ -24,13 +24,19 @@ class FMLInventory : Inventory {
 		// basically if the player has mouselook on, disable the mod
 		if (GetCVar("autoaim") < 35 && (GetCVar("m_pitch") > 0 && GetCVar("freelook"))) return;
 
+		// force autoaim on weapons that disable this
+		// shouldn't be used with grenades or things that actually need this flag
+		if (player.readyweapon && mo.GetCVar("fml_force_autoaim"))
+			player.readyweapon.A_ChangeFlag("WEAPON.NOAUTOAIM", false);
+
 		// we want to reset the pitch ONLY after the player has finished shooting.
 		// for this we need to seek the last tic the player was shooting and the next tic where the player isn't
-		if (!(oldWeaponState & WF_WEAPONREADY) && player.weaponState & WF_WEAPONREADY)
+		if (!(oldWeaponState & WF_WEAPONREADY) && player.weaponState & WF_WEAPONREADY && !mo.GetCVar("fml_during_shooting"))
 			mo.A_SetPitch(pitch, SPF_INTERPOLATE);
 
-		// or just always force it to be 0 i guess
+		// or do it more aggresively
 		if (!(player.weaponState & WF_WEAPONREADY) && mo.GetCVar("fml_during_shooting"))
+			// setting it to 0 insures that your screen gets centered in some cases
 			mo.A_SetPitch(0, SPF_INTERPOLATE);
 		
 		if (player.weaponState & WF_WEAPONREADY)
