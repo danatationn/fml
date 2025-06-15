@@ -1,20 +1,20 @@
 AddOptionMenu "OptionsMenu" {
-	Submenu "FML Settings", "FMLMenu"
+	Submenu "$FML_SETTINGS", "FMLMenu"
 }
 
 AddOptionMenu "OptionsMenuSimple" {
-	Submenu "FML Settings", "FMLMenu"
+	Submenu "$FML_SETTINGS", "FMLMenu"
 }
 
 OptionMenu "FMLMenu" {
-	Title "FML Settings"
+	Title "$FML_SETTINGS"
 	
-	Option "Enable FML", "fml_enabled", "YesNo"
+	Option "$FML_ENABLE", "fml_enabled", "YesNo"
 	StaticText ""
-	Option "Force autoaim on all weapons", "fml_force_autoaim", "YesNo"
-	StaticText "WARNING: Some weapons (e.g. grenades) actually need autoaim to be off!"
-	StaticText "Be sure to toggle this off whenever you don't need it"
+	Option "$FML_AUTOAIM", "fml_force_autoaim", "YesNo"
+	StaticText "$FML_AUTOAIM1", Gold
+	StaticText "$FML_AUTOAIM2", Gold
 	StaticText ""
-	Slider "Max pitch", "fml_max_pitch", 0, 90, 0.5, 1
-	StaticText "Caps your pitch (for stuff like full-auto guns)"
+	Slider "$FML_MAXPITCH", "fml_max_pitch", 0, 90, 0.5, 1
+	StaticText "$FML_MAXPITCH1", Gold
 }
