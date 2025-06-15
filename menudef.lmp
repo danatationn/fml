@@ -3,19 +3,18 @@ AddOptionMenu "OptionsMenu" {
 }
 
 AddOptionMenu "OptionsMenuSimple" {
+	Submenu "FML Settings", "FMLMenu"
 }
 
 OptionMenu "FMLMenu" {
 	Title "FML Settings"
 	
 	Option "Enable FML", "fml_enabled", "YesNo"
-	StaticText "Toggles FML on or off"
-	StaticText ""
-	Option "Be more aggresive", "fml_during_shooting", "YesNo"	
-	StaticText "This is done by resetting your pitch while shooting as well"
-	StaticText "(is a bit buggy)"
 	StaticText ""
 	Option "Force autoaim on all weapons", "fml_force_autoaim", "YesNo"
-	StaticText "Warning: Some weapons (e.g. grenades) actually need autoaim to be off to work properly"
-	StaticText "Turning this off requires a map reload"
+	StaticText "WARNING: Some weapons (e.g. grenades) actually need autoaim to be off!"
+	StaticText "Be sure to toggle this off whenever you don't need it"
+	StaticText ""
+	Slider "Max pitch", "fml_max_pitch", 0, 90, 0.5, 1
+	StaticText "Caps your pitch (for stuff like full-auto guns)"
 }
