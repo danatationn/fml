@@ -1,17 +1,17 @@
 [enu default]
 FML_SETTINGS = "FML Settings";
 FML_ENABLE = "Enable FML";
+FML_ENABLE1 = "Having mouselook on with automatically disable FML";
 FML_AUTOAIM = "Force autoaim on all weapons";
-FML_AUTOAIM1 = "WARNING: Some weapons (e.g. grenades) actually need autoaim to be off";
-FML_AUTOAIM2 = "Be sure to toggle this off whenever you don't need it";
+FML_AUTOAIM1 = "This might break some projectile based weapons";
 FML_MAXPITCH = "Max pitch";
-FML_MAXPITCH1 = "Caps your pitch (for stuff like full-auto guns)";
+FML_MAXPITCH1 = "Caps your pitch (useful for machine guns)";
 
 [ro]
 FML_SETTINGS = "Setări FML";
 FML_ENABLE = "Activează FML";
+FML_ENABLE1 = "FML se va dezactiva automat dacă ai mouselook-u pornit";
 FML_AUTOAIM = "Forțează autoaim asupra tuturor armelor";
-FML_AUTOAIM1 = "AVERTIZARE: Unele arme (e.g. grenadele) poate să aibă nevoie de autoaim să fie oprit";
-FML_AUTOAIM2 = "Dezactivează asta când nu ai nevoie";
+FML_AUTOAIM1 = "Asta poate strica unele arme";
 FML_MAXPITCH = "Unghiul vertical maxim";
-FML_MAXPITCH1 = "Limitează unghiul vertical (util la armele automatice)";
+FML_MAXPITCH1 = "Limitează unghiul vertical (util la mitraliere)";

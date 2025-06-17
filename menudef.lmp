@@ -10,10 +10,10 @@ OptionMenu "FMLMenu" {
 	Title "$FML_SETTINGS"
 	
 	Option "$FML_ENABLE", "fml_enabled", "YesNo"
+	StaticText "$FML_ENABLE1", Gold
 	StaticText ""
 	Option "$FML_AUTOAIM", "fml_force_autoaim", "YesNo"
 	StaticText "$FML_AUTOAIM1", Gold
-	StaticText "$FML_AUTOAIM2", Gold
 	StaticText ""
 	Slider "$FML_MAXPITCH", "fml_max_pitch", 0, 90, 0.5, 1
 	StaticText "$FML_MAXPITCH1", Gold

@@ -8,7 +8,6 @@ class FMLHandler : EventHandler {
 	}
 	
 	override void WorldThingSpawned(WorldEvent e) {
-
 		if (e.Thing && e.Thing.target && e.Thing.target.player && e.Thing.target.player.readyweapon) {
 			PlayerInfo player = e.Thing.target.player;
 			PlayerPawn mo = player.mo;
@@ -16,62 +15,35 @@ class FMLHandler : EventHandler {
 
 			if (mo.GetCVar("autoaim") < 35 && (mo.GetCVar("m_pitch") > 0 && mo.GetCVar("freelook"))) return;
 			if (!mo.GetCVar("fml_force_autoaim")) return;
-			
-			vector3 weapPos = (
-				weap.pos.x,
-				weap.pos.y,
-				weap.pos.z
-			);
 
-			vector3 playerPos = (
-				mo.pos.x,
-				mo.pos.y,
-				mo.pos.z + player.viewheight
-			);
-			weap.SetXYZ((
-				playerPos.x,
-				playerPos.y,
-				playerPos.z
-			));
+			// the weapons pos is at 0 0 0
+			vector3 weapPos = (weap.pos.x, weap.pos.y, weap.pos.z);
+			vector3 playerPos = (mo.pos.x, mo.pos.y, mo.pos.z + player.viewheight);
+			weap.SetXYZ((playerPos.x, playerPos.y, playerPos.z));
 			
 			FTranslatedLineTarget pLineTarget;
+			// even though we are supplying the players angle it's still using the weapon's pos
 			double pitch = weap.AimLineAttack(mo.angle, 8192, pLineTarget, 0, ALF_NOWEAPONCHECK);
 			Actor target = pLineTarget.linetarget;
-
-			weap.SetXYZ((
-				weapPos.x,
-				weapPos.y,
-				weapPos.z
-			));
 			
-			if (pitch && target) {
-				vector3 targetPos = (
-					target.pos.x,
-					target.pos.y,
-					target.pos.z + (target.height / 2)
-				);
-				vector3 diff = targetPos - playerPos;
-			
-				double flatDist = (diff.x, diff.y).Length();
-				double properPitch = -atan2(diff.z, flatDist);
-				double speed = e.Thing.Vel.Length();
-			
-				e.Thing.Vel.Z = -sin(properPitch) * speed;
+			if (pitch) {
+				e.Thing.Vel.Z = -sin(pitch) * e.Thing.Vel.Length();
 			}
+			
+			weap.SetXYZ((weapPos.x, weapPos.y, weapPos.z));
 		}
 	}
 }
 
 class FMLInventory : Inventory {
-	float pitch;
-	uint16 oldWeaponState;
 	Array<Weapon> flaggedWeapons;
 
 	Default {
-		+INVENTORY.AUTOACTIVATE;
+		+INVENTORY.UNDROPPABLE;
+		+INVENTORY.PERSISTENTPOWER;
 	}
 	
-	override void Tick() {
+	override void DoEffect() {
 		PlayerInfo player = owner.player;
 		PlayerPawn mo = player.mo;
 		Weapon weap = player.readyweapon;
@@ -81,19 +53,14 @@ class FMLInventory : Inventory {
 		if (GetCVar("autoaim") < 35 && (GetCVar("m_pitch") > 0 && GetCVar("freelook"))) return;
 
 		// we want to reset the pitch ONLY after the player has finished shooting
-		if (!(oldWeaponState & WF_WEAPONREADY) && player.weaponState & WF_WEAPONREADY && !mo.GetCVar("fml_during_shooting"))
-			mo.A_SetPitch(pitch, SPF_INTERPOLATE);
-
 		if (player.weaponState & WF_WEAPONREADY)
-			pitch = mo.pitch;
+			mo.A_SetPitch(0, SPF_INTERPOLATE);
 
 		if (mo.pitch > maxPitch)
 			mo.A_SetPitch(maxPitch, SPF_INTERPOLATE);
 		if (mo.pitch < -maxPitch)
 			mo.A_SetPitch(-maxPitch, SPF_INTERPOLATE);
-		
-		oldWeaponState = player.weaponState;
-		
+
 		// keep track of the weapons that disable autoaim
 		if (!weap) return;
 		
