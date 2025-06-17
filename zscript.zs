@@ -13,8 +13,8 @@ class FMLHandler : EventHandler {
 			PlayerPawn mo = player.mo;
 			Weapon weap = player.readyweapon;
 
-			if (mo.GetCVar("autoaim") < 35 && (mo.GetCVar("m_pitch") > 0 && mo.GetCVar("freelook"))) return;
-			if (!mo.GetCVar("fml_force_autoaim")) return;
+			if (mo.GetCVar("autoaim") < 1 && (mo.GetCVar("m_pitch") > 0 && mo.GetCVar("freelook"))) return;
+			if (mo.GetCVar("fml_force_autoaim") != mo.GetCVar("fml_enabled")) return;
 
 			// the weapons pos is at 0 0 0
 			vector3 weapPos = (weap.pos.x, weap.pos.y, weap.pos.z);
