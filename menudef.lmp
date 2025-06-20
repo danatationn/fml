@@ -9,12 +9,18 @@ AddOptionMenu "OptionsMenuSimple" {
 OptionMenu "FMLMenu" {
 	Title "$FML_SETTINGS"
 	
-	Option "$FML_ENABLE", "fml_enabled", "YesNo"
+	Option "$FML_ENABLE", "fml_enabled", "YesNo", "freelook", 0, 1
 	StaticText "$FML_ENABLE1", Gold
 	StaticText ""
-	Option "$FML_AUTOAIM", "fml_force_autoaim", "YesNo"
+	Option "$FML_AUTOAIM", "fml_force_autoaim", "YesNo", "freelook", 0, 1
 	StaticText "$FML_AUTOAIM1", Gold
 	StaticText ""
-	Slider "$FML_MAXPITCH", "fml_max_pitch", 0, 90, 0.5, 1
+	Slider "$FML_MAXPITCH", "fml_max_pitch", 0, 90, 0.5, 1, "freelook", 1
 	StaticText "$FML_MAXPITCH1", Gold
+	StaticText ""
+	StaticText "---", White
+	StaticText ""
+	Option "$MOUSEMNU_ALWAYSMOUSELOOK",	"freelook",	"OnOff"
+	Slider "$MOUSEMNU_FORWBACKSPEED", "m_forward", 0, 2.5, 0.1
+	StaticText "$FML_FORWBACK1", Gold
 }

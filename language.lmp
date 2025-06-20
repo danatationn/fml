@@ -6,6 +6,7 @@ FML_AUTOAIM = "Force autoaim on all weapons";
 FML_AUTOAIM1 = "This might break some projectile based weapons";
 FML_MAXPITCH = "Max pitch";
 FML_MAXPITCH1 = "Caps your pitch (useful for machine guns)";
+FML_FORWBACK1 = "You will never want this on, set it to 0";
 
 [ro]
 FML_SETTINGS = "Setări FML";
@@ -15,3 +16,4 @@ FML_AUTOAIM = "Forțează autoaim asupra tuturor armelor";
 FML_AUTOAIM1 = "Asta poate strica unele arme";
 FML_MAXPITCH = "Unghiul vertical maxim";
 FML_MAXPITCH1 = "Limitează unghiul vertical (util la mitraliere)";
+FML_FORWBACK1 = "Nu vei avea nevoie de asta niciodată, bagă-l pe 0";
