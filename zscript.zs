@@ -1,4 +1,4 @@
-version "2.30"
+version "4.13.0"
 
 class FMLHandler : EventHandler {
 	override void PlayerSpawned(PlayerEvent e) {
@@ -14,7 +14,7 @@ class FMLHandler : EventHandler {
 			Weapon weap = player.readyweapon;
 
 			if (mo.GetCVar("autoaim") == 0 && (mo.GetCVar("m_pitch") > 0 && mo.GetCVar("freelook"))) return;
-			if (mo.GetCVar("fml_force_autoaim") != mo.GetCVar("fml_enabled")) return;
+			if (mo.GetCVar("fml_force_autoaim") == 0) return;
 
 			// the weapons pos is at 0 0 0
 			vector3 weapPos = (weap.pos.x, weap.pos.y, weap.pos.z);
@@ -49,6 +49,17 @@ class FMLInventory : Inventory {
 		Weapon weap = player.readyweapon;
 		double maxPitch = mo.GetCVar("fml_max_pitch");
 		
+		// keep track of the weapons that disable autoaim
+		if (!weap) return;
+		
+		if (weap.bNOAUTOAIM == true && flaggedWeapons.Find(weap) == flaggedWeapons.Size())
+			flaggedWeapons.Push(weap);
+
+		if (mo.GetCVar("fml_force_autoaim"))
+			weap.bNOAUTOAIM = false;
+		else if (flaggedWeapons.Find(weap) != flaggedWeapons.Size())
+			weap.bNOAUTOAIM = true;
+		
 		if (!mo.GetCVar("fml_enabled")) return;
 		if (GetCVar("autoaim") == 0 && (GetCVar("m_pitch") > 0 && GetCVar("freelook"))) return;
 
@@ -60,16 +71,5 @@ class FMLInventory : Inventory {
 			mo.A_SetPitch(maxPitch, SPF_INTERPOLATE);
 		if (mo.pitch < -maxPitch)
 			mo.A_SetPitch(-maxPitch, SPF_INTERPOLATE);
-
-		// keep track of the weapons that disable autoaim
-		if (!weap) return;
-		
-		if (weap.bNOAUTOAIM == true && flaggedWeapons.Find(weap) == flaggedWeapons.Size())
-			flaggedWeapons.Push(weap);
-
-		if (mo.GetCVar("fml_force_autoaim"))
-			weap.bNOAUTOAIM = false;
-		else if (flaggedWeapons.Find(weap) != flaggedWeapons.Size())
-			weap.bNOAUTOAIM = true;
 	}
 }

@@ -12,7 +12,7 @@ OptionMenu "FMLMenu" {
 	Option "$FML_ENABLE", "fml_enabled", "YesNo", "freelook", 0, 1
 	StaticText "$FML_ENABLE1", Gold
 	StaticText ""
-	Option "$FML_AUTOAIM", "fml_force_autoaim", "YesNo", "freelook", 0, 1
+	Option "$FML_AUTOAIM", "fml_force_autoaim", "YesNo"
 	StaticText "$FML_AUTOAIM1", Gold
 	StaticText ""
 	Slider "$FML_MAXPITCH", "fml_max_pitch", 0, 90, 0.5, 1, "freelook", 1
