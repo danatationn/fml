@@ -13,8 +13,8 @@ class FMLHandler : EventHandler {
 			PlayerPawn mo = player.mo;
 			Weapon weap = player.readyweapon;
 
-			if (mo.GetCVar("autoaim") == 0 && (mo.GetCVar("m_pitch") > 0 && mo.GetCVar("freelook"))) return;
-			if (mo.GetCVar("fml_force_autoaim") == 0) return;
+			if (mo.GetCVar("fml_force_autoaim") == 0)
+				return;
 
 			// the weapons pos is at 0 0 0
 			vector3 weapPos = (weap.pos.x, weap.pos.y, weap.pos.z);
@@ -26,9 +26,8 @@ class FMLHandler : EventHandler {
 			double pitch = weap.AimLineAttack(mo.angle, 8192, pLineTarget, 0, ALF_NOWEAPONCHECK);
 			Actor target = pLineTarget.linetarget;
 			
-			if (pitch) {
+			if (pitch)
 				e.Thing.Vel.Z = -sin(pitch) * e.Thing.Vel.Length();
-			}
 			
 			weap.SetXYZ((weapPos.x, weapPos.y, weapPos.z));
 		}
@@ -50,7 +49,8 @@ class FMLInventory : Inventory {
 		double maxPitch = mo.GetCVar("fml_max_pitch");
 		
 		// keep track of the weapons that disable autoaim
-		if (!weap) return;
+		if (!weap)
+			return;
 		
 		if (weap.bNOAUTOAIM == true && flaggedWeapons.Find(weap) == flaggedWeapons.Size())
 			flaggedWeapons.Push(weap);
@@ -60,10 +60,11 @@ class FMLInventory : Inventory {
 		else if (flaggedWeapons.Find(weap) != flaggedWeapons.Size())
 			weap.bNOAUTOAIM = true;
 		
-		if (!mo.GetCVar("fml_enabled")) return;
-		if (GetCVar("autoaim") == 0 && (GetCVar("m_pitch") > 0 && GetCVar("freelook"))) return;
+		if (!mo.GetCVar("fml_enabled"))
+			return;
+		if (GetCVar("autoaim") == 0 && (GetCVar("m_pitch") > 0 && GetCVar("freelook")))
+			return;
 
-		// we want to reset the pitch ONLY after the player has finished shooting
 		if (player.weaponState & WF_WEAPONREADY)
 			mo.A_SetPitch(0, SPF_INTERPOLATE);
 
